@@ -56,8 +56,8 @@ class MagicBall
              "Concentrate and ask again", "Don't bet on it",
              "My reply is no", "My sources say no",
              "Outlook not so good", "Very doubtful", 
-			 "I don't think so, Dave"
-			]
+	     "I don't think so, Dave"
+            ]
  end
 end
 
