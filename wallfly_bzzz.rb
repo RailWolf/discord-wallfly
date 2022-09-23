@@ -77,8 +77,8 @@ class Goto
   @filter =
   / 
      \(\s?\d{1,2}\/\d{1,2}\)\s\[CAMERA\]WallFly$ |
-	   \(\s?\d{1,2}\/\d{1,2}\)\sstooge1$ |
-	   .*ZIGBOT.*
+     \(\s?\d{1,2}\/\d{1,2}\)\sstooge1$ |
+     .*ZIGBOT.*
   /x
   end
   
