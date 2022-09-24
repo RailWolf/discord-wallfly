@@ -9,7 +9,7 @@ WallFly[BZZZ] Discord Bot
 
 Currently has Goto plus Magic 8 Ball
 
-This requires a few pieces from dorkbuster to operate. server-info.cfg and all-servers.cfg must be configured.
+This requires a few pieces from dorkbuster to operate. all-servers.cfg must be configured.
  
 q2cmd.rb and all-servers.cfg need symlinks in the bot's cwd
 
