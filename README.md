@@ -1,3 +1,3 @@
 # discord-wallfly
 
-![Alt text](screenshot.JPG?raw=true)
+![Alt text](screenshot.jpg?raw=true)
