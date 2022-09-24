@@ -8,8 +8,8 @@ load $server_info
 # Currently has Goto plus Magic 8 Ball
 # This requires a few pieces from dorkbuster to operate. server-info.cfg and all-servers.cfg must be configured.
 # q2cmd.rb and all-servers.cfg need symbolic links in the bot's cwd
-# Set path to server-status.rb and discord token in bot_cfg.rb file. They shouldn't change though unless you've changed the 
-# folder structure for some reason :P
+# # Set discord token in bot_cfg.rb. The paths in bot_cfg.rb shouldn't change unless you've changed the folder 
+# structure for some reason :P
 # Note server-status.rb currently uses Ruby 1.8.6 and WallFly[BZZZ] Discord Bot uses 3.1.0
 # 
 
