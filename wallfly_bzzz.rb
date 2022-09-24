@@ -75,8 +75,8 @@ class Goto
   # Should probably filter [CAMERA]WallFly[BZZZ]$ and stooge1$ in the server-status file instead of here so that it ignores them in quake2 as well.
   @filter =
   / 
-     \(\s?\d{1,2}\/\d{1,2}\)\s\[CAMERA\]WallFly$ |
-     \(\s?\d{1,2}\/\d{1,2}\)\sstooge1$ |
+     \[CAMERA\]WallFly$ |
+     stooge1$ |
      .*ZIGBOT.*
   /x
   end
