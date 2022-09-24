@@ -89,7 +89,7 @@ class Goto
   # Get a total player count ignoring filtered lines
   def get_player_count(status_lines)
    status_lines.each_line do |line|
-    if line =~ /.*\(\s?\d{1,2}\/\s?\d{1,2}\).*/ && line !~ @filter
+    if line =~ @active && line !~ @filter
 	 num = line[/\(\s?\d{1,2}/].delete("^[0-9]").to_i
 	 @counter += num
 	end
