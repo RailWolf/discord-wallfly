@@ -101,20 +101,20 @@ class Goto
   @status_lines.each_line do |line|
    line.chop!
    if line =~ @activeheader
-    line = line.gsub(@activeheader, "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}")
-    if event.message.to_s =~ @dmc
-	line = line.reverse
-	end
-	event.respond color.getcolor(:orange1) + "#{line}" + color.getcolor(:orange2)
-	@counter = 0
-   elsif line =~ @active && line !~ @filter
-	if event.message.to_s =~ @dmc 
-	line = line.reverse
-    end
-	event.respond "#{@emoji} `#{line}`"
+     line = line.gsub(@activeheader, "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}")
+     if event.message.to_s =~ @dmc
+       line = line.reverse
+     end
+     event.respond color.getcolor(:orange1) + "#{line}" + color.getcolor(:orange2)
+     @counter = 0
+     elsif line =~ @active && line !~ @filter
+       if event.message.to_s =~ @dmc 
+         line = line.reverse
+       end
+     event.respond "#{@emoji} `#{line}`"
    end
   end  
-  end
+ end
   
  end 
 
