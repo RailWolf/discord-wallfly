@@ -1,5 +1,4 @@
 require 'discordrb'
-require 'resolv-replace'
 load 'bot_cfg.rb'
 load $server_info
 
