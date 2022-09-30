@@ -42,8 +42,8 @@ class MagicBall
  attr_reader :answers, :cmd, :cmdok
  
  def initialize 
- @cmd = /\!8ball.*/i
- @cmdok = /^\!8ball\s.*/i
+ @cmd = /!8ball.*/i
+ @cmdok = /^!8ball\s.*/i
  @answers = ["It is certain", "It is decidedly so",
              "Without a doubt", "Yes, definitely",
              "You may rely on it", "As I see it, yes",
@@ -67,8 +67,8 @@ class Goto
   @counter = 0
   @status_lines = []
   @emoji = "<:q2:740942279501676585>"
-  @cmd = /^\!goto|^otog\!/ix
-  @dmc = /^otog\!/ix
+  @cmd = /^!goto|^otog!/ix
+  @dmc = /^otog!/ix
   @activeheader = /.*ACTIVE_SERVERS.*/
   @active = /.*\(\s?\d{1,2}\/\s?\d{1,2}\).*/
   # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server. 
