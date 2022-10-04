@@ -14,8 +14,8 @@ load $server_info
 #
 
 class DiscordColors
- # These aren't all the colors in Discord markdown, but these were good to work with.
- # Only using orange right now for this project, but added them all to a class in case of future additions. Random header colors?
+  # These aren't all the colors in Discord markdown, but these were good to work with.
+  # Only using orange right now for this project, but added them all to a class in case of future additions. Random header colors?
   def initialize
     @colors = {
       red1: "```diff\n-= ",
@@ -56,7 +56,7 @@ class MagicBall
                 'My reply is no', 'My sources say no',
                 'Outlook not so good', 'Very doubtful',
                 'I don\'t think so, Dave'
-               ]
+    ]
   end
 end
 
@@ -70,15 +70,17 @@ class Goto
     @cmd = /^!goto|^otog!/ix
     @dmc = /^otog!/ix
     @activeheader = /.*ACTIVE_SERVERS.*/
-    @active = /.*\(\s?\d{1,2}\/\s?\d{1,2}\).*/
-  # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
-  # Should probably filter [CAMERA]WallFly[BZZZ]$ and stooge1$ in the server-status file instead of here so that it ignores them in quake2 as well.
-    @filter =
-      /
-         \[CAMERA\]WallFly$ |
-         stooge1$ |
-         .*ZIGBOT.*
-      /x
+    # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
+    # Should probably filter [CAMERA]WallFly[BZZZ]$ and stooge1$ in the server-status file instead of here so that it ignores them in quake2 as well.
+    @active =
+      %r{
+         ^(?!
+         .*ZIGBOT.*|
+         .*\[CAMERA\]WallFly$|
+         .*stooge1$
+         )
+         .*\(\s?\d{1,2}/\s?\d{1,2}\).*
+         }x
   end
 
   # Dropping to shell to execute the 1.8.6 server-status.rb file
@@ -89,10 +91,10 @@ class Goto
   # Get a total player count ignoring filtered lines
   def get_player_count(status_lines)
     status_lines.each_line do |line|
-      if line =~ @active && line !~ @filter
-        num = line[/\(\s?\d{1,2}/].delete('^[0-9]').to_i
+      if line =~ @active
+        num = line[/\(\s?\K\d{1,2}/].to_i
         @counter += num
-    end
+      end
     end
   end
 
@@ -100,19 +102,20 @@ class Goto
   def send(event, color)
     @status_lines.each_line do |line|
       line.chop!
-      if line =~ @activeheader
-        line = line.gsub(@activeheader, "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}")
+      case line
+      when @activeheader
+        line = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
         line = line.reverse if event.message.to_s =~ @dmc
         event.respond color.getcolor(:orange1) + line.to_s + color.getcolor(:orange2)
         @counter = 0
-      elsif line =~ @active && line !~ @filter
+      when @active
         line = line.reverse if event.message.to_s =~ @dmc
         event.respond "#{@emoji} `#{line}`"
       end
     end
- end
+  end
 
- end
+end
 
 begin
   goto = Goto.new
@@ -136,17 +139,17 @@ begin
 
   bot.run
 rescue RestClient::ServerBrokeConnection
-    retry
+  retry
 rescue Net::OpenTimeout
-    retry
+  retry
 rescue RestClient::Exceptions::OpenTimeout
-    retry
+  retry
 rescue RestClient::BadRequest
-    retry
+  retry
 rescue Discordrb::Errors::MessageTooLong
-    retry
+  retry
 rescue RestClient::InternalServerError
-    retry
+  retry
 rescue Errno::ECONNRESET
-    retry
+  retry
 end
