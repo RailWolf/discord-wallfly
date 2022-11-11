@@ -11,9 +11,10 @@ load $server_info
 # structure for some reason :P
 # Note server-status.rb currently uses Ruby 1.8.6 and WallFly[BZZZ] Discord Bot uses 3.1.0
 
+# These aren't all the colors in Discord markdown, but these were good to work with.
+# Picking random color for the header each time.
 class DiscordColors
-  # These aren't all the colors in Discord markdown, but these were good to work with.
-  # Only using orange right now for this project, but added them all to a class in case of future additions.
+  
   def initialize
     @colors = {
       red1: "```diff\n-= ",
