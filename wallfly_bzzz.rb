@@ -70,8 +70,8 @@ class Goto
   end
 
   # Get a total player count ignoring filtered lines
-  def get_player_count(status_lines)
-    status_lines.each_line do |line|
+  def get_player_count
+    @status_lines.each_line do |line|
       if line =~ @active
         num = line[/\(\s?\K\d{1,2}/].to_i
         @counter += num
@@ -107,7 +107,7 @@ begin
 
   bot.message(content: goto.cmd) do |event|
     goto.servstat
-    goto.get_player_count(goto.status_lines)
+    goto.get_player_count
     goto.send(event, color)
   end
 
