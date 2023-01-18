@@ -1,3 +1,5 @@
+# Copy to bot_auth.rb
+
 module WallFlyBot
 
   # Bot Token and any additional logins such as database

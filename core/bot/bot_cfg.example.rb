@@ -1,4 +1,5 @@
-# Copy to "bot_cfg.rb" and update token + paths if needed
+# Copy to bot_cfg.rb
+
 module WallFlyBot
 
   # Channels and whatnots
