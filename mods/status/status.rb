@@ -6,7 +6,6 @@ module WallFlyBot
     def initialize(event)
       @event = event
       @status_str = []
-      @cmd = /^!?frags\s.*|^!?status\s.*|^!?scores?\s.*/i
       @serverstruct = ''
       @scores = []
       @sorted_by_score = []

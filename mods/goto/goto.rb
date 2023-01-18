@@ -8,7 +8,6 @@ module WallFlyBot
       @counter = 0
       @status_lines = []
       @emoji = '<:q2:740942279501676585>'
-      @cmd = /^!?goto|^otog!?/ix
       @dmc = /^otog!?/ix
       @activeheader = /.*ACTIVE_SERVERS.*/
       # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
