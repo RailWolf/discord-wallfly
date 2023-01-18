@@ -2,7 +2,7 @@
 
 module WallFlyBot
 
-  # Channels and whatnots
+  # Channels, commands and what not
   class BotConfig
     attr_reader :channels_goto, :channels_status, :cmds_goto, :cmds_status, :server_status, :server_info
 
