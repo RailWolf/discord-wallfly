@@ -1,0 +1,22 @@
+# Copy to "bot_cfg.rb" and update token + paths if needed
+module WallFlyBot
+
+  # Channels and whatnots
+  class BotConfig
+    attr_reader :channels_goto, :channels_status, :cmds_goto, :cmds_status, :server_status, :server_info
+
+    def initialize
+      # Goto file for obtaining server status
+      @server_status = '../server-status/server-status.rb'
+      # Contains the servers struct for matching nicknames to IPs
+      @server_info = '../dorkbuster/server-info.cfg'
+      # Channels
+      @channels_goto = %w[#goto #roses-bounce-house #test #live-test]
+      @channels_status = %w[#goto #roses-bounce-house #test #live-test]
+      # Commands
+      @cmds_goto = /^!?goto|^otog!?/ix
+      @cmds_status = /^!?frags\s.*|^!?status\s.*|^!?scores?\s.*/i
+    end
+  end
+  CFG = BotConfig.new
+end
