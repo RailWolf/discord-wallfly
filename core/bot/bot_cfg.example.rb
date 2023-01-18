@@ -10,7 +10,7 @@ module WallFlyBot
       # Goto file for obtaining server status
       @server_status = '../server-status/server-status.rb'
       # Contains the servers struct for matching nicknames to IPs
-      @server_info = '../dorkbuster/server-info.cfg'
+      @server_info = '../server-status/all-servers.cfg'
       # Channels
       @channels_goto = %w[#goto #roses-bounce-house #test #live-test]
       @channels_status = %w[#goto #roses-bounce-house #test #live-test]
