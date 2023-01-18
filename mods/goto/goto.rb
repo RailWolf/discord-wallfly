@@ -13,12 +13,12 @@ module WallFlyBot
       @activeheader = /.*ACTIVE_SERVERS.*/
       # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
       # Should probably filter [CAMERA]WallFly[BZZZ]$ and stooge1$ in the server-status file instead of here so that it ignores them in quake2 as well.
+      # .*\)\s(stooge1|\[CAMERA\]WallFly),\s(stooge1|\[CAMERA\]WallFly)$
       @active =
         %r{
            ^(?!
            .*ZIGBOT.*|
-           .*\)\s(\[CAMERA\]WallFly|stooge1)$|
-           .*\)\s(stooge1|\[CAMERA\]WallFly),\s(stooge1|\[CAMERA\]WallFly)$
+           .*\)\s(\[CAMERA\]WallFly|stooge1)(,\s(stooge1|\[CAMERA\]WallFly))?$
            )
            .*\(\s?\d{1,2}/\s?\d{1,2}\).*
            }x
