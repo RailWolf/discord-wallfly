@@ -11,7 +11,6 @@ module WallFlyBot
       @sorted_by_score = []
       @dead = false
       @counter = 0
-      # TODO: filter wallfly
       @wallfly = /WallFly\[BZZZ\]/x
     end
 
@@ -57,12 +56,12 @@ module WallFlyBot
     def parse_status_str
       lines = @status_str.to_s.split(/\n/)
       lines.shift # drop "print" line
-      lines.each do |client_line|
-        client_line.strip!
-        next unless client_line =~ /(\d+)\s+(\d+)\s+"(.*)"/
+      lines.each do |line|
+        line.strip!
+        next unless line =~ /(\d+)\s+(\d+)\s+"(.*)"/
 
         score, ping, name = $1.ljust(5, ' '), $2.ljust(4, ' '), $3
-        @scores << "`#{score} | #{ping} | #{name}`"
+        @scores << "`#{score} | #{ping} | #{name}`" unless name =~ @wallfly
       end
       sort
     end
