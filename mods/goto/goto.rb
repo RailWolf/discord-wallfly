@@ -7,8 +7,11 @@ module WallFlyBot
       @event = event
       @counter = 0
       @status_lines = []
+      @output = []
       @emoji = '<:q2:740942279501676585>'
       @dmc = /^otog!?/ix
+      @upsd = /^!?ƃoʇo/ix
+      @dspu = /^!?oʇoƃ/
       @activeheader = /.*ACTIVE_SERVERS.*/
       # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
       @active =
@@ -24,6 +27,7 @@ module WallFlyBot
     def go
       servstat
       count_players
+      parse
       send
     end
 
@@ -42,21 +46,43 @@ module WallFlyBot
       end
     end
 
+    def alternate_cmds(line)
+      case @event.message.to_s
+      when @dmc
+        line = line.reverse
+      when @upsd
+        line = line.downcase.flip
+      when @dspu
+        line = line.downcase.flip.reverse
+      end
+      line
+    end
+
     # Parse and send to Discord. If the cmd was otog! then reverse the line.
-    def send
+    def parse
       @status_lines.each_line do |line|
         line.chop!
         case line
         when @activeheader
           line = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
-          line = line.reverse.to_s if @event.message.to_s =~ @dmc
+          line = alternate_cmds(line)
           pick = COLOR.color_pick
-          @event.respond COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
+          # @event.respond COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
+          @output << COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
           @counter = 0
         when @active
-          line = line.reverse if @event.message.to_s =~ @dmc
-          @event.respond "#{@emoji} `#{line}`"
+          line = alternate_cmds(line)
+          # line = line.reverse if @event.message.to_s =~ @dmc
+          # @event.respond "#{@emoji} `#{line}`"
+          @output << "#{@emoji} `#{line}`"
         end
+      end
+      @output.reverse! if @event.message.to_s =~ @upsd || @dspu
+    end
+
+    def send
+      @output.each do |line|
+        @event.respond line
       end
     end
   end
