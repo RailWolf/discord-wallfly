@@ -14,6 +14,7 @@ load '../server-status/all-servers.cfg'
 require_relative 'mods/goto/goto'
 require_relative 'mods/status/status'
 require_relative 'q2cmd3'
+require 'flippy'
 
 # WallFly Bot
 module WallFlyBot
