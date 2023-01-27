@@ -10,8 +10,8 @@ module WallFlyBot
       @output = []
       @emoji = '<:q2:740942279501676585>'
       @dmc = /^otog!?/ix
-      @upsd = /^!?ƃoʇo/ix
-      @dspu = /^!?oʇoƃ/
+      @upsd = /^!?oʇoƃ/ix
+      @dspu = /^!?ƃoʇo/ix
       @activeheader = /.*ACTIVE_SERVERS.*/
       # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
       @active =
@@ -67,13 +67,10 @@ module WallFlyBot
           line = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
           line = alternate_cmds(line)
           pick = COLOR.color_pick
-          # @event.respond COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
           @output << COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
           @counter = 0
         when @active
           line = alternate_cmds(line)
-          # line = line.reverse if @event.message.to_s =~ @dmc
-          # @event.respond "#{@emoji} `#{line}`"
           @output << "#{@emoji} `#{line}`"
         end
       end
