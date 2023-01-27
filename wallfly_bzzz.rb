@@ -9,7 +9,7 @@ require 'discordrb'
 require_relative 'core/bot/bot_cfg'
 require_relative 'core/bot/bot_auth'
 require_relative 'core/discord/colors'
-require_relative 'core/bot/flippy/flippy'
+require_relative 'core/flippy/flippy'
 # Mods
 load '../server-status/all-servers.cfg'
 require_relative 'mods/goto/goto'
