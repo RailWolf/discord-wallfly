@@ -1,3 +1,7 @@
+require_relative 'status'
+require_relative 'bot_events'
+require_relative 'q2cmd3'
+
 module WallFlyBot
 
   # Goto
@@ -9,11 +13,11 @@ module WallFlyBot
       @status_lines = []
       @output = []
       @emoji = '<:q2:740942279501676585>'
-      @dmc = /^otog!?/ix
-      @upsd = /^!?oʇoƃ/ix
-      @dspu = /^!?ƃoʇo/ix
-      @activeheader = /.*ACTIVE_SERVERS.*/
-      # Some servers always have [CAMERA]WallFly[BZZZ] or stooge1 returned, so filter them out if that's the only "person" in the server.
+      @dmc = /^otog!?/i
+      @upsd = /^!?oʇoƃ/i
+      @activeheader = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
+      # Some servers always have [CAMERA]WallFly[BZZZ], stooge1 or both returned.
+      # Filter them out if that's the only "person" in the server.
       @active =
         %r{
            ^(?!
@@ -27,6 +31,7 @@ module WallFlyBot
     def go
       servstat
       count_players
+      insert_header
       parse
       send
     end
@@ -36,14 +41,19 @@ module WallFlyBot
       @status_lines = `"#{CFG.server_status}"`
     end
 
-    # Get a total player count ignoring filtered lines
+    # Get a total player count
     def count_players
       @status_lines.each_line do |line|
-        if line =~ @active
-          num = line[/\(\s?\K\d{1,2}/].to_i
-          @counter += num
-        end
+        next unless line =~ @active
+
+        num = line[/\(\s?\K\d{1,2}/].to_i
+        @counter += num
       end
+    end
+
+    def insert_header
+      pick = COLOR.color_pick
+      @output << COLOR.color_get(:"#{pick}1") + alternate_cmds(@activeheader) + COLOR.color_get(:"#{pick}2")
     end
 
     def alternate_cmds(line)
@@ -52,35 +62,26 @@ module WallFlyBot
         line = line.reverse
       when @upsd
         line = line.downcase.flip
-      when @dspu
-        line = line.downcase.flip.reverse
       end
       line
     end
 
-    # Parse and send to Discord. If the cmd was otog! then reverse the line.
     def parse
       @status_lines.each_line do |line|
         line.chop!
-        case line
-        when @activeheader
-          line = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
-          line = alternate_cmds(line)
-          pick = COLOR.color_pick
-          @output << COLOR.color_get(:"#{pick}1") + line + COLOR.color_get(:"#{pick}2")
-          @counter = 0
-        when @active
-          line = alternate_cmds(line)
-          @output << "#{@emoji} `#{line}`"
-        end
+        next unless line =~ @active
+
+        line = alternate_cmds(line)
+        @output << "#{@emoji} `#{line}`"
       end
-      @output.reverse! if @event.message.to_s =~ @upsd || @dspu
     end
 
     def send
+      @output.reverse! if @event.message.to_s =~ @upsd
       @output.each do |line|
         @event.respond line
       end
     end
   end
+
 end

@@ -1,6 +1,3 @@
-# encoding: UTF-8
-
-# Flippy
 module Flippy
   module Vertical
     PUNC = %w(、 。 ， ．)

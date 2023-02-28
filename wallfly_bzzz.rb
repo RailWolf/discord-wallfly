@@ -4,49 +4,39 @@
 # 2022-2023 RailWolf
 # railwolf@tastyspleen.net
 
-# Bot
 require 'discordrb'
-require_relative 'core/bot/bot_cfg'
 require_relative 'core/bot/bot_auth'
+require_relative 'core/bot/bot_admin_cmds'
 require_relative 'core/discord/colors'
 require_relative 'core/flippy/flippy'
-# Mods
+require_relative 'core/bot/bot_cfg'
 load '../server-status/all-servers.cfg'
 require_relative 'mods/goto/goto'
-require_relative 'mods/status/status'
-require_relative 'q2cmd3'
+require_relative 'mods/wf_talk/wf_talk'
 
-# WallFly Bot
+# BZZZ
 module WallFlyBot
 
-  BOT = Discordrb::Bot.new token: AUTH.token
   begin
-
-    BOT.message(content: CFG.cmds_goto, in: CFG.channels_goto) do |event|
-      goto = Goto.new(event)
-      goto.go
-    end
-
-    BOT.message(content: CFG.cmds_status, in: CFG.channels_status) do |event|
-      status = Status.new(event)
-      status.go
-    end
-
-    BOT.message(content: '!wfreload', author: 'RailWolf#4617') do |event|
-      load CFG.server_info
-      event.respond 'Server List Reloaded'
-    end
-
-    BOT.run
+    BOT.run :async
+    BOT.join
   rescue RestClient::ServerBrokeConnection
+    puts 'Server Broke Connection'
+    sleep 1
     retry
   rescue Net::OpenTimeout
+    puts 'Open Timeout'
+    sleep 1
     retry
   rescue RestClient::Exceptions::OpenTimeout
+    puts 'Open Timeout Exception'
+    sleep 1
     retry
   rescue Discordrb::Errors::MessageTooLong
-    retry
+    puts 'Character Limit Hit For Message'
   rescue Errno::ECONNRESET
+    puts 'Connection Reset'
+    sleep 1
     retry
   end
 end
