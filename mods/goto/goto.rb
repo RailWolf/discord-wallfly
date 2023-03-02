@@ -15,7 +15,7 @@ module WallFlyBot
       @emoji = '<:q2:740942279501676585>'
       @dmc = /^otog!?/i
       @upsd = /^!?oʇoƃ/i
-      @activeheader = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
+      @activeheader = ''
       # Some servers always have [CAMERA]WallFly[BZZZ], stooge1 or both returned.
       # Filter them out if that's the only "person" in the server.
       @active =
@@ -53,6 +53,7 @@ module WallFlyBot
 
     def insert_header
       pick = COLOR.color_pick
+      @activeheader = "TASTYSPLEEN.NET AND FRIENDS ACTIVE QUAKE2 SERVERS | PLAYERS: #{@counter}"
       @output << COLOR.color_get(:"#{pick}1") + alternate_cmds(@activeheader) + COLOR.color_get(:"#{pick}2")
     end
 
