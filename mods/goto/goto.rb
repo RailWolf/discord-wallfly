@@ -11,7 +11,7 @@ module WallFlyBot
     attr_accessor :status_lines
     attr_reader :active
 
-    def initialize # (event)
+    def initialize
       @event = ''
       @counter = 0
       @status_lines = []
@@ -42,8 +42,6 @@ module WallFlyBot
     # Get a total player count
     def count_players
       @status_lines.each do |line|
-        # next unless line =~ @active
-
         num = line[/\(\s?\K\d{1,2}/].to_i
         @counter += num
       end

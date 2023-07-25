@@ -14,7 +14,6 @@ module WallFlyBot
     def initialize(sv)
       @sv = sv
       @snd_response = ''
-      # @player = PLAYER_STRUCT.new
       run
     end
 
@@ -99,7 +98,7 @@ module WallFlyBot
       players_a = []
       players = response.to_s.split(/00/)
       players.each_with_index do |p, i|
-        next unless p =~ /ffffffff44|4[3-6]$/
+        next unless p =~ /f{8}44|4[3-6]$/
 
         # Force encoding on here for now. Sometimes it gets rejected in discordrb with invalid utf-8 character.
         name = [players[i + 1]].pack('H*').to_s.gsub(/\^\d/, '').force_encoding("ISO-8859-1").encode("UTF-8")

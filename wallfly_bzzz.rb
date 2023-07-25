@@ -4,7 +4,6 @@
 # 2022-2023 RailWolf
 # railwolf@tastyspleen.net
 
-# require 'rubygems'
 require 'discordrb'
 require 'fiber_scheduler'
 require_relative 'core/bot/bot_auth'
@@ -20,7 +19,7 @@ require_relative 'mods/wf_talk/wf_talk'
 # BZZZ
 module WallFlyBot
   begin
-     puts Discordrb::VERSION
+    # puts Discordrb::VERSION
     BOT.run :async
     BOT.join
   end
